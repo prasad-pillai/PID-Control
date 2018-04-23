@@ -17,6 +17,7 @@ public:
   double Ki;
   double Kd;
 
+  //for checking first_cte
   bool first_cte = true;
 
   double prev_cte ;

@@ -10,15 +10,6 @@ PID::PID() {}
 
 PID::~PID() {}
 
-// void PID::Init(double Kp, double Ki, double Kd) {
-// }
-//
-// void PID::UpdateError(double cte) {
-// }
-//
-// double PID::TotalError() {
-// }
-
 
 void PID::Init(double Kp, double Ki, double Kd) {
 	PID::Kp = Kp;
@@ -28,8 +19,8 @@ void PID::Init(double Kp, double Ki, double Kd) {
 
 void PID::UpdateError(double cte) {
 
+// handle first_cte when previous cte is not set
 	if (first_cte){
-		//if this is the first cte signal received
 		prev_cte = cte;
 		sum_cte = 0;
 	  first_cte= false;
@@ -37,13 +28,15 @@ void PID::UpdateError(double cte) {
   p_error = cte;
   d_error = cte- prev_cte;
   i_error = sum_cte;
-  prev_cte = cte;      //Set prev_cte as current CTE for next iteration
+  prev_cte = cte;
   sum_cte += cte;
 
 }
 
 double PID::TotalError()  {
-	double steer = -1*(Kp*p_error + Kd*d_error + Ki*i_error);
+	//computation
+	double steer = -1 * ( Kp * p_error + Kd * d_error + Ki * i_error );
+	//keeping steer from high values
 	if(steer > 1){
 		steer = 1;
 	}
